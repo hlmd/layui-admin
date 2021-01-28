@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>管理员添加</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link type="text/css" rel="stylesheet" href="static/layui/css/layui.css" />
+    <link type="text/css" rel="stylesheet" href="static/scrollbar/jquery.scrollbar.css" />
+    <link type="text/css" rel="stylesheet" href="static/admin/css/page-item.css" />
+    <style>
+        .tjxz{color:green;}
+        .scxz{color:black;transition: all .2s;}
+        .scxz:hover{color:red;}
+        .xzjs{height: 40px;margin-bottom:5px;}
+        .xzjs .layui-form-select{width: calc(100% - 25px);display: inline-block;}
+        .xzjs i{float:right;line-height:40px;cursor:pointer;font-size: 20px;}
+        .layui-form-item .layui-form-label{width: 3em;}
+        .layui-form-item .layui-input-inline{margin-left: calc(3em + 30px);margin-bottom: 0;}
+    </style>
+</head>
+<body>
+<div class="page-main scrollbar-inner">
+    <div class="page-container">
+        <div class="layui-form" lay-filter="layer_form" id="layer_form">
+            <div class="layui-form-item">
+                <label class="layui-form-label">管理员</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="uName" lay-verify="required" value="lhh" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">手机</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="tel" lay-verify="phone" value="13333333333" placeholder="请输入号码" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">邮箱</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="email" lay-verify="email" value="1913555371@qq.com" placeholder="请输入邮箱" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">密码</label>
+                <div class="layui-input-inline">
+                    <input type="password" name="pwd" lay-verify="password" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">角色</label>
+                <div class="layui-input-inline" id="roles"></div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">状态</label>
+                <div class="layui-input-inline">
+                    <input type="checkbox" value="1" lay-filter="switch" name="status" lay-skin="switch" lay-text="可用|禁用">
+                </div>
+            </div>
+            <div class="layui-form-item layui-hide">
+                <input type="button" lay-submit lay-filter="layer_submit" id="layer_submit" value="确认">
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="static/jquery/jquery-3.4.1.js"></script>
+<script type="text/javascript" src="static/scrollbar/jquery.scrollbar.min.js"></script>
+<script type="text/javascript" src="static/layui/layui.js"></script>
+<script>
+    //角色列表
+    var roles = [
+        {role_name : '网站管理员', role_id : 2},
+        {role_name : '文章管理员', role_id : 3}
+    ];
+    //已有角色
+    var has_roles = [2 , 3];
+    layui.use(['form','layer'], function(){
+        form = layui.form;
+        layer = layui.layer;
+        /* 自定义验证规则 */
+        form.verify({
+            password: [/(.+){6,18}$/, '密码必须6到18位']
+        });
+        if(has_roles){  //回显
+            for(let i in has_roles){
+                add_role(has_roles[i]);
+            }
+        }else{
+            add_role(true); //添加角色
+        }
+
+
+        //添加角色
+        function add_role(n){
+            var div = $("<div>").addClass('xzjs');
+            var select = $('<select>').addClass('jsxz').attr('name' , 'role[]').attr('lay-filter' , 'pdcf');
+            select.append($('<option>').text('请选择').val(""));
+            //角色列表选项
+            $.each(roles , function (i , item) {
+                let option = $('<option>').attr('value' , item.role_id).text(item.role_name);
+                if(n == item.role_id){   //回显
+                    option.attr('selected' , true);
+                }
+                select.append(option);
+            });
+            if(n && !$(".xzjs").length){  //添加按钮
+                var active = $('<i>').addClass('layui-icon layui-icon-add-1 tjxz').attr('title' , '添加');
+                active.click(function () {
+                    var length = $(this).parent().siblings().length + 1;
+                    if(length >= 3){
+                        layer.msg('最多3个角色', {icon: 5});
+                        return;
+                    }
+                    add_role();  //添加角色
+                });
+            }else{
+
+                var active = $('<i>').addClass('layui-icon layui-icon-close scxz').attr('title' , '删除');
+                active.click(function () {   //删除此角色
+                    $(this).parent().remove();
+                });
+            }
+            div.append(select).append(active);
+            $("#roles").append(div);
+            form.render();  //表单重新渲染
+        }
+
+        //角色选择判断
+        form.on('select(pdcf)',function (data) {
+            var status = [];
+            $.each($(".jsxz"),function (i , item) {
+                if(item.value){
+                    if(status.indexOf(item.value) > -1){
+                        layer.msg('角色不能重复', {icon: 5});
+                        $(item).val("");
+                        form.render();
+                        return;
+                    }
+                    status.push(item.value);
+                }
+            });
+        });
+
+        //滚动条
+        jQuery(".page-main").scrollbar();
+    });
+
+</script>
+</body>
+</html>

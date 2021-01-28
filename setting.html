@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>设置</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link type="text/css" rel="stylesheet" href="static/layui/css/layui.css" />
+    <link type="text/css" rel="stylesheet" href="static/scrollbar/jquery.scrollbar.css" />
+    <link type="text/css" rel="stylesheet" href="static/admin/iconfont/iconfont.css" />
+    <link type="text/css" rel="stylesheet" href="static/admin/css/page-item.css" />
+</head>
+<body>
+<div class="page-main scrollbar-inner">
+    <div class="page-container">
+        <div class="page-fluid">
+            <div class="layui-card">
+                <div class="layui-card-header">缓存设置</div>
+                <div class="layui-card-body ">
+                    <form class="layui-form" action="" onsubmit="return false;">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label" style="width:inherit;">清理框架运行文件</label>
+                            <div class="layui-input-inline">
+                                <select class="runtimefile">
+                                    <option value="">请选择</option>
+                                    <option value="*">所有</option>
+                                    <option value="cache">&nbsp;|-&nbsp;缓存</option>
+                                    <option value="log">&nbsp;|-&nbsp;日志</option>
+                                    <option value="temp">&nbsp;|-&nbsp;模板引擎</option>
+                                </select>
+                            </div>
+                            <div class="layui-input-inline">
+                                <button class="layui-btn layui-btn-danger setting" type="button" data-type="clearruntime">清理</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="layui-card">
+                <div class="layui-card-header">静态页面设置</div>
+                <div class="layui-card-body ">
+                    <form class="layui-form" action="" onsubmit="return false;">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label"style="width:inherit;">清理WEB静态页面</label>
+                            <div class="layui-input-inline">
+                                <select class="staticfile">
+                                    <option value="">请选择</option>
+                                    <option value="*">所有</option>
+                                    <option value="index">&nbsp;|-&nbsp;首页</option>
+                                </select>
+                            </div>
+                            <div class="layui-input-inline">
+                                <button class="layui-btn layui-btn-danger setting" type="button" data-type="clearhtml">清理</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="static/admin/iconfont/iconfont.js"></script>
+<script type="text/javascript" src="static/jquery/jquery-3.4.1.js"></script>
+<script type="text/javascript" src="static/admin/js/common.js"></script>
+<script type="text/javascript" src="static/scrollbar/jquery.scrollbar.min.js"></script>
+<script type="text/javascript" src="static/layui/layui.js"></script>
+<script type="text/javascript">
+    layui.use(['form'] , function () {
+        form = layui.form;
+    });
+    $(document).ready(function () {
+        jQuery(".page-main").scrollbar();
+    });
+</script>
+</body>
+</html>

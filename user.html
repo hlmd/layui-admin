@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>管理员列表</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link type="text/css" rel="stylesheet" href="static/layui/css/layui.css" />
+    <link type="text/css" rel="stylesheet" href="static/scrollbar/jquery.scrollbar.css" />
+    <link type="text/css" rel="stylesheet" href="static/admin/iconfont/iconfont.css" />
+    <link type="text/css" rel="stylesheet" href="static/admin/css/page-item.css" />
+</head>
+<body>
+<div class="page-main scrollbar-inner">
+    <div class="page-container">
+        <div class="page-fluid">
+            <form class="layui-form layui-unselect table-form" action="">
+                <div class="layui-inline" style="width: 90px;" >
+                    <select name="field" lay-verify="">
+                        <option value="user_name">管理员</option>
+                        <option value="user_tel">手机号</option>
+                        <option value="user_email">邮箱</option>
+                    </select>
+                </div>
+                <div class="layui-inline">
+                    <input type="text" name="search" required lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input" />
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label" style="width: 2em;">角色</label>
+                    <div class="layui-input-block" style="margin-left: calc(2em + 30px);">
+                        <select name="role">
+                            <option value="">请选择</option>
+                            <option value="2">网站管理员</option>
+                            <option value="3">文章管理员</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <button type="button" lay-filter="sub" lay-submit class="layui-btn">搜索</button>
+                </div>
+            </form>
+            <script type="text/html" id="toolbar">
+                <a class="layui-btn layui-btn-sm" lay-event="add">添加管理员</a>
+            </script>
+            <table id="list" lay-filter="list"></table>
+            <script type="text/html" id="status">
+                {{# if(d.user_id == 1){ }}
+                -
+                {{# }else{ }}
+                <input type="checkbox" name="status" value="{{d.user_id}}" lay-skin="switch" lay-text="启用|禁用" lay-filter="status" {{ d.user_status == 1 ? 'checked' : '' }}>
+                {{# } }}
+            </script>
+            <script type="text/html" id="action">
+                {{# if(d.user_id == 1){ }}
+                <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+                {{# }else{ }}
+                <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+                {{# } }}
+            </script>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="static/admin/iconfont/iconfont.js"></script>
+<script type="text/javascript" src="static/jquery/jquery-3.4.1.js"></script>
+<script type="text/javascript" src="static/admin/js/common.js"></script>
+<script type="text/javascript" src="static/scrollbar/jquery.scrollbar.min.js"></script>
+<script type="text/javascript" src="static/layui/layui.js"></script>
+<script type="text/javascript">
+    layui.use(['layer' , 'form' , 'table' , 'laytpl'] , function () {
+        var layer = layui.layer,
+            form = layui.form,
+            table = layui.table
+        laytpl = layui.laytpl;
+
+        /*表格渲染*/
+        table.render({
+            id : 'list',
+            elem : '#list',
+            data :[
+                {
+                    "user_id": 1,
+                    "user_name": "lhh",
+                    "user_tel": "13333333333",
+                    "user_email": "1913555371@qq.com",
+                    "user_role": "超级管理员",
+                    "user_status": 1,
+                    "user_create_time": "2019-07-30 09:49:50",
+                    "user_update_time": "2019-07-30 09:49:50",
+                },
+                {
+                    "user_id": 2,
+                    "user_name": "pyy",
+                    "user_tel": "13333333333",
+                    "user_email": "1913555371@qq.com",
+                    "user_role": "网站管理员",
+                    "user_status": 1,
+                    "user_create_time": "2019-07-27 13:54:07",
+                    "user_update_time": "2019-07-27 13:54:07",
+                }
+            ],
+            method : 'POST',
+            page: true,
+            toolbar : '#toolbar',
+            cellMinWidth: 80,
+            cols : [[
+                {field :'user_id' , title :'ID'},
+                {field :'user_name' , title :'管理员'},
+                {field :'user_tel' , title :'手机号'},
+                {field :'user_email' , title :'邮箱'},
+                {field :'user_role' , title :'角色' , minWidth : 130},
+                {field :'user_status' , title :'状态' , toolbar : '#status'},
+                {field :'user_create_time' , title :'创建时间', templet(d){
+                        return date('Y-m-d H:i:s' , d.user_create_time * 1000);
+                    }},
+                {field :'user_update_time' , title :'更新时间' , width :160},
+                {field :'action' , title :'操作' , fixed :'right' , toolbar : '#action' , width :115 }
+            ]]
+        });
+
+
+        /*表单提交监听*/
+        form.on('submit(sub)' , function (data) {
+            table.reload('list', {
+                where: data.field
+            });
+            return false;
+        });
+
+
+        /*表格头工具监听*/
+        table.on('toolbar(list)' , function (obj) {
+            var data = obj.data; //获得当前行数据
+            var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+            var tr = obj.tr; //获得当前行 tr 的 DOM 对象（如果有的话）
+            switch (layEvent) {
+                case 'add':
+                    add(obj);  //添加
+                    break;
+            }
+        });
+
+        /*表格行工具监听*/
+        table.on('tool(list)' , function (obj) {
+            var data = obj.data; //获得当前行数据
+            var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+            var tr = obj.tr; //获得当前行 tr 的 DOM 对象（如果有的话）
+            eval(layEvent + '(obj)');   //直接出发事件并吧obj传过去
+        });
+
+        /*监听复选框选择*/
+        /*修改状态*/
+        form.on('switch(status)',function (data) {
+            // console.log(data.elem); //得到radio原始DOM对象
+            // console.log(data.value); //被点击的radio的value值
+            // console.log(data.elem.checked); //是否选中
+            var id = data.value;
+            var status = data.elem.checked;
+            $.ajax({
+                url: "{:url('/admin/adminuser/edit_status')}",
+                data: {id:id , status : status},
+                type: "post",
+                dataType: "JSON",
+                success: function (msg) {
+                    if (msg.code == 0) {
+                       // layer.msg(msg.msg);
+                        //table.reload('LAY-user-back-manage'); //数据刷新
+                       // return;
+                    }
+                    //layer.msg(msg.msg, {icon: 5});
+                },
+                error: function () {
+                    //layer.msg("请求失败", {icon: 5})
+                },
+                complete(){
+
+                }
+            });
+        });
+
+        /*添加*/
+        function add(obj){
+            console.log('添加');
+            layer.open({
+                type: 2
+                ,title: '添加管理员'
+                ,content: "user_add.html"
+                ,area: ['420px', '420px']
+                ,btn: ['确定', '取消']
+                ,yes: function(index, layero){
+                    var iframeWindow = window['layui-layer-iframe'+ index]
+                        ,submitID = 'layer_submit'
+                        ,submit = layero.find('iframe').contents().find('#'+ submitID);
+
+                    //监听提交
+                    iframeWindow.layui.form.on('submit('+ submitID +')', function(data){
+                        var index2 = layer.load(0);
+                        var field = data.field; //获取提交的字段
+                        //提交 Ajax 成功后，静态更新表格中的数据
+                        $.ajax({
+                            url: "{:url('/admin/adminuser/add')}",
+                            data: field,
+                            type: "Post",
+                            dataType: "JSON",
+                            success:function (msg) {
+                                if(msg.code == 0){
+                                    layer.msg(msg.msg,{icon:1});
+                                    table.reload('list'); //数据刷新
+                                    layer.close(index); //关闭弹层
+                                    return;
+                                }
+                                layer.msg(msg.msg,{icon:5});
+                            },
+                            error:function () {
+                                layer.msg("请求失败",{icon:5})
+                            },
+                            complete(){
+                                layer.close(index2);
+                            }
+                        });
+                    });
+                    submit.trigger('click');
+                }
+            });
+        }
+
+
+        /*编辑*/
+        function edit(obj){
+            console.log('编辑');
+            layer.open({
+                type: 2
+                ,title: '编辑管理员'
+                ,content: "user_edit.html"
+                ,area: ['420px', '420px']
+                ,btn: ['确定', '取消']
+                ,yes: function(index, layero){
+                    var iframeWindow = window['layui-layer-iframe'+ index]
+                        ,submitID = 'layer_submit'
+                        ,submit = layero.find('iframe').contents().find('#'+ submitID);
+
+                    //监听提交
+                    iframeWindow.layui.form.on('submit('+ submitID +')', function(data){
+                        var index2 = layer.load(0);
+                        var field = data.field; //获取提交的字段
+                        //提交 Ajax 成功后，静态更新表格中的数据
+                        $.ajax({
+                            url: "{:url('/admin/adminuser/edit')}",
+                            data: field,
+                            type: "Post",
+                            dataType: "JSON",
+                            success:function (msg) {
+                                if(msg.code == 0){
+                                    layer.msg(msg.msg,{icon:1});
+                                    table.reload('list'); //数据刷新
+                                    layer.close(index); //关闭弹层
+                                    return;
+                                }
+                                layer.msg(msg.msg,{icon:5});
+                            },
+                            error:function () {
+                                layer.msg("请求失败",{icon:5})
+                            },
+                            complete(){
+                                layer.close(index2);
+                            }
+                        });
+                    });
+                    submit.trigger('click');
+                }
+            });
+        }
+
+
+        /*删除*/
+        function del(obj){
+            console.log('删除');
+
+            layer.confirm('确定删除吗？', function(index) {
+                layer.close(index);
+                var index2 = layer.load(0);
+                $.ajax({
+                    url: "{:url('/admin/adminuser/del')}",
+                    data: {id:ids},
+                    type: "post",
+                    dataType: "JSON",
+                    success: function (msg) {
+                        if (msg.code == 0) {
+                            layer.msg(msg.msg);
+                            table.reload('LAY-user-back-manage'); //数据刷新
+                            layer.close(index); //关闭弹层
+                            return;
+                        }
+                        layer.msg(msg.msg, {icon: 5});
+                    },
+                    error: function () {
+                        layer.msg("请求失败", {icon: 5})
+                    },
+                    complete(){
+                        layer.close(index2);
+                    }
+                });
+            });
+        }
+
+
+        //滚动条
+        jQuery(".page-main").scrollbar();
+
+    });
+</script>
+</body>
+</html>

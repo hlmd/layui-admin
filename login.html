@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="csrf-token" content="{$token}" />
+    <meta name="admin-url" content="{:url('admin/index/index')}" />
+    <title>后台-登录</title>
+    <link rel="stylesheet" type="text/css" href="static/admin/css/login.css" />
+    <link rel="stylesheet" type="text/css" href="static/layui/css/layui.css" />
+</head>
+<body>
+<div id="main" class="bg_img layui-unselect">
+    <form class="layui-form" action="{:url('admin/login/sign')}" method="post">
+        <div class="title">后台登录</div>
+        <label>
+            <span><i class="layui-icon">&#xe66f;</i></span>
+            <input type="text" name="user" required lay-verify="user" value="lhh" autocomplete="off" placeholder="管理员" class="layui-input" />
+        </label>
+        <label>
+            <span><i class="layui-icon">&#xe673;</i></span>
+            <input type="password" name="pwd" required lay-verify="pwd" value="123456" autocomplete="off" placeholder="密码" class="layui-input" />
+        </label>
+        <label class="captcha">
+            <span><i class="layui-icon">&#xe672;</i></span>
+            <input type="text" name="code" required lay-verify="code" value="rwup" autocomplete="off" placeholder="验证码" class="layui-input" />
+<!--            <img src="{:url('admin/login/captcha')}" title="看不清，点击换一张" />-->
+            <img src="static/admin/image/captcha.png" title="看不清，点击换一张" />
+        </label>
+        <button type="submit" lay-submit lay-filter="login" class="layui-btn" >登录</button>
+    </form>
+</div>
+<script type="text/javascript" src="static/layui/layui.js"></script>
+<script type="text/javascript" src="static/admin/js/login.js"></script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+/*
+ +----------------------------------------------------------------------
+ | login.css 后台登录样式
+ +----------------------------------------------------------------------
+ | Time 2020-03-17
+ +----------------------------------------------------------------------
+ | Author: lhh <1913555371@qq.com>
+ +----------------------------------------------------------------------
+*/
+@charset "UTF-8";
+/* 初始化 - 开始 */
+*{box-sizing: border-box;}
+.bg_img{background-size: cover;background-position: center;background-repeat: no-repeat;}
+:root{
+    /*背景图*/
+    --bg-image : url('../image/login_bg.png');
+
+
+    /*颜色*/
+    --title-color : #fff;
+
+
+    /*背景色*/
+    --form-bg-color : rgba(255,255,255,0.2);
+}
+
+/* 初始化 - 结束 */
+
+
+/* 登录 - 开始 */
+#main{background-image: var(--bg-image);min-height: 100%;width: 100%;display: flex;align-items: center;justify-content: center;flex-direction: column;padding: 15px;position: absolute;}
+#main .layui-form{width: 320px;background:var(--form-bg-color);padding:15px 30px 30px;box-shadow: 0 0 5px rgba(0,0,0,0.4);border-radius: 3px;max-width: 100%;overflow: hidden;}
+#main .title{text-align: center;font-size: 22px;margin-bottom: 15px;color: var(--title-color);pointer-events: none;}
+#main .layui-input{height: 40px;padding: 0 10px 0 40px;}
+#main label{position: relative;margin-bottom: 10px;display: flex;overflow: hidden;max-width: 100%;align-items: center;border-radius: 2px;flex-wrap: wrap;}
+#main label span{position: absolute;width: 40px;height: 40px;top:0;left: 0;display: flex;align-items: center;justify-content: center;z-index: 1;pointer-events: none;}
+#main label span .layui-icon{font-size: 20px;}
+#main .captcha img{position:absolute;right: 1px;top:1px;height: 38px;cursor: pointer;}
+#main .layui-btn{width: 100%;overflow: hidden;}
+
+/* 登录 - 结束 */
+
+@media only screen and (max-width: 320px) {
+    #main .captcha img{position:unset;width: 100%;height: auto;margin-top: 10px;}
+}

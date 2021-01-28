@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>后台</title>
+    <link type="text/css" rel="stylesheet" href="static/admin/iconfont/iconfont.css" />
+    <link type="text/css" rel="stylesheet" href="static/scrollbar/jquery.scrollbar.css" />
+    <link type="text/css" rel="stylesheet" href="static/nprogress/nprogress.min.css" />
+    <link type="text/css" rel="stylesheet" href="static/layui/css/layui.css" />
+    <link type="text/css" rel="stylesheet" href="static/admin/css/site.css" />
+</head>
+<body>
+<div id="main" class="unselect">
+    <div class="admin-header scrollbar-inner">
+        <ul class="list">
+            <li>
+                <a id="changeMenu" title="收起">
+                    <i class="iconfont icon-shouqi"></i>
+                </a>
+            </li>
+            <li>
+                <a title="前台">
+                    <i class="iconfont icon-wangzhanguanli"></i>
+                </a>
+            </li>
+            <li>
+                <a data-url="admin/shuiji">
+                    <span>书签</span>
+                    <i class="iconfont icon-jiantouyou1"></i>
+                </a>
+                <dl>
+                    <span class="triangle"></span>
+                    <dd>
+                        <a  data-url="https://layui.com" onclick="pageOpen($(this))">
+                            <span>Layui</span>
+                        </a>
+                    </dd>
+                    <dd>
+                        <a target="_blank" href="http://postman.ltd">
+                            <span>Postman汉化</span>
+                        </a>
+                    </dd>
+                    <dd>
+                        <a target="_blank" href="http://wantbe.cn">
+                            <span>黄连木笛</span>
+                        </a>
+                    </dd>
+                </dl>
+            </li>
+            <span class="bar"></span>
+        </ul>
+        <ul class="list">
+            <li>
+                <a data-url="admin/shuiji">
+                    <span>LHH</span>
+                    <i class="iconfont icon-jiantouyou1"></i>
+                </a>
+                <dl>
+                    <span class="triangle"></span>
+                    <dd>
+                        <a href="login.html">
+                            <i class="iconfont icon-guanji"></i>
+                            <span>修改资料</span>
+                        </a>
+                    </dd>
+                    <dd>
+                        <a href="login.html">
+                            <i class="iconfont icon-guanji"></i>
+                            <span>退出</span>
+                        </a>
+                    </dd>
+                </dl>
+            </li>
+            <span class="bar"></span>
+        </ul>
+    </div>
+    <div class="admin-menu">
+        <div>
+            <div class="logo flex-c">
+                <div class="web">后台框架</div>
+                <div class="wap">0.0</div>
+            </div>
+            <ul class="nav-list scrollbar-inner">
+                <li>
+                    <a data-url="console.html" data-title="主页" class="default">
+                        <i class="iconfont icon-zhuye"></i>
+                        <span>主页</span>
+                    </a>
+                </li>
+                <li>
+                    <a data-url="static/admin/iconfont/demo_index.html">
+                        <i class="iconfont layui-icon layui-icon-note"></i>
+                        <span>Iconfont</span>
+                    </a>
+                </li>
+                <li>
+                    <a data-url="admin/shuiji">
+                        <i class="iconfont icon-quanxian"></i>
+                        <span>权限</span>
+                        <i class="iconfont icon-jiantouyou1"></i>
+                    </a>
+                    <dl>
+                        <dd>
+<!--                            <a data-url="{:url('user/index')}">-->
+                            <a data-url="user.html">
+                                <i class="iconfont icon-guanliyuan"></i>
+                                <span>管理员列表</span>
+                            </a>
+                        </dd>
+                        <dd>
+                            <a>
+                                <i class="iconfont icon-role"></i>
+                                <span>角色列表</span>
+                            </a>
+                        </dd>
+                        <dd>
+                            <a>
+                                <i class="iconfont icon-icon-"></i>
+                                <span>菜单列表</span>
+                            </a>
+                        </dd>
+                    </dl>
+                </li>
+                <li>
+                    <a data-url="admin/shuiji">
+                        <i class="iconfont icon-wangzhanguanli"></i>
+                        <span>我有子菜单</span>
+                        <i class="iconfont icon-jiantouyou1"></i>
+                    </a>
+                    <dl>
+                        <dd>
+                            <a data-url="admin/shuiji">
+                                <span>子菜单1</span>
+                            </a>
+                        </dd>
+                        <dd>
+                            <a data-url="admin/shuiji">
+                                <span>子菜单2</span>
+                                <i class="iconfont icon-jiantouyou1"></i>
+                            </a>
+                            <dl>
+                                <dd><a data-url="admin/shuiji"><span>孙菜单</span></a></dd>
+                                <dd><a data-url="admin/shuiji"><span>孙菜单</span></a></dd>
+                            </dl>
+                        </dd>
+                        <dd>
+                            <a data-url="admin/shuiji">
+                                <span>子菜单3</span>
+                                <i class="iconfont icon-jiantouyou1"></i>
+                            </a>
+                            <dl>
+                                <dd><a data-url="admin/shuiji"><span>孙菜单</span></a></dd>
+                                <dd><a data-url="admin/shuiji"><span>孙菜单</span></a></dd>
+                            </dl>
+                        </dd>
+                    </dl>
+                </li>
+                <li>
+                    <a data-url="404.html">
+                        <i class="iconfont icon-set"></i>
+                        <span>404页面</span>
+                    </a>
+                </li>
+                <li>
+                    <a data-url="setting.html">
+                        <i class="iconfont icon-set"></i>
+                        <span>设置</span>
+                    </a>
+                </li>
+                <span class="nav-bar"></span>
+            </ul>
+        </div>
+    </div>
+    <div class="admin-menu-zzc"></div>
+    <div class="admin-page unselect">
+        <div class="prev btn change-page" title="上一项">
+            <i class="iconfont icon-jiantouzuo"></i>
+        </div>
+        <div class="page-list">
+            <span class="page-bar"></span>
+        </div>
+        <div class="next btn change-page" title="下一项">
+            <i class="iconfont icon-jiantouyou"></i>
+        </div>
+        <div class="other btn">
+            <i class="iconfont icon-caidan"></i>
+            <div class="list right">
+                <span class="triangle"></span>
+                <a class="item close_page_now">关闭当前标签页</a>
+                <a class="item close_page_other">关闭其它标签页</a>
+                <a class="item close_page_all">关闭全部标签页</a>
+            </div>
+        </div>
+    </div>
+    <div class="admin-body">
+        <!--            <iframe class="page-body on" src="/static/admin/iconfont/demo_index.html"></iframe>-->
+    </div>
+</div>
+<script type="text/javascript" src="static/jquery/jquery-3.4.1.js"></script>
+<script type="text/javascript" src="static/jquery/jquery.mousewheel.min.js"></script>
+<script type="text/javascript" src="static/scrollbar/jquery.scrollbar.min.js"></script>
+<script type="text/javascript" src="static/nprogress/nprogress.min.js"></script>
+<script type="text/javascript" src="static/admin/js/site.js" ></script>
+</body>
+</html>
